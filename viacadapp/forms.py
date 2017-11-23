@@ -3,6 +3,9 @@ from .functions import ListaMaterias
 from .models import Materias
 from .models import Profesores 
 from .models import Solicitud 
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
+
 
 class FormularioInscripcionProfesores(forms.ModelForm):
 	nombrecompleto= forms.CharField(label='Nombre Completo',max_length= 80)
@@ -45,3 +48,9 @@ class FormularioSolicitud(forms.Form):
 	fecha= forms.DateField(label= 'Fecha de tutoría', widget=forms.DateInput(format=('%m-%d-%Y'), 
                                attrs={'class':'myDateClass', 
                                'placeholder':'m-d-a'}))
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(label='Correo electrónico',
+    widget=forms.TextInput(attrs={'class':'form-control','placeholder':'e-mail','style':'width:30%'}))
+    password = forms.CharField(label='Contraseña', max_length=32,
+    widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Contraseña','style':'width:30%'}))

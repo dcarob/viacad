@@ -1,8 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Profesores(models.Model):
 	nombrecompleto= models.CharField(max_length= 80)
-	correo= models.EmailField(max_length= 100)
+	correo= models.EmailField(max_length= 100, )
 	contraseña= models.CharField(max_length=32)
 	foto= models.ImageField(upload_to="viacadapp/images")
 	materia= models.CharField(max_length=250)
@@ -30,3 +33,5 @@ class Solicitud(models.Model):
 class Votaciones(models.Model):
 	nombreprofesor=models.CharField(max_length=80)
 	votacion=models.DecimalField( max_digits=5, decimal_places=2)
+
+

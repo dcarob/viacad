@@ -1,0 +1,63 @@
+{% extends 'viacadapp/base.html' %}
+
+{% block content %}
+<div class="container" >
+     
+	    	
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Perfil Profesores</h2>
+  <table class="table" width="100%" border="0" cellpadding="0" cellspacing="0">
+    <thead>
+    	
+      <tr>
+      	<th align="center">Foto</th>
+        <th align="center"><STRONG>Nombre Completo</STRONG></th>
+        <th align="center"><STRONG>Descripcion</STRONG></th>
+        <th align="center"><STRONG>Correo</STRONG></th>
+        <th align="center"><STRONG>Costo Hora</STRONG></th>
+        <th align="center"><STRONG> </STRONG></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for x in perfilusuario %}
+      <tr class="info">
+      	<td> 
+      		
+      		<img src= "{{MEDIA_URL}}{{x.foto.url}}" width="150" height="150" />
+      	</td>
+        <td>{{ x.nombrecompleto }}</td>
+        <td>{{ x.cualidades }}</td>
+        <td align="enter">{{ x.correo }}</td>
+        <td align="enter">{{x.costohora}}</td>
+        <td align="enter"> <a href="elegido/"><button type="button" class="btn btn-default" >Editar </button></a></td>
+
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+  </table>
+
+</div>
+
+</body>
+</html>
+
+
+
+	    </div>
+      </form>
+     
+    </div>
+
+{% endblock %}

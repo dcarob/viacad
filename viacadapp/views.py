@@ -6,6 +6,8 @@ from django.contrib import messages
 from .functions import CrearMaterias 
 from .forms import FormularioInscripcionProfesores 
 from .forms import FormularioInscripcionAlumnos 
+from .forms import LoginForm 
+
 from .forms import ElegirMateria 
 from .forms import FormularioSolicitud
 from django.core.mail import send_mail
@@ -124,3 +126,48 @@ def registroSolicitud(request):
 		form=FormularioSolicitud()
 		return render(request, 'viacadapp/elegido.html',{'form':form})
   
+def login(request):
+    if request.method=='POST':
+        form= LoginForm(request.POST)
+        if form.is_valid():
+            Email=form.cleaned_data['email']
+            Password=form.cleaned_data['password']
+            #print(Email)
+            #print(Password)
+            correo=list(Profesores.objects.values_list('correo',flat=True).filter(correo=Email))
+            contra=list(Profesores.objects.values_list('contraseña',flat=True).filter(contraseña=Password))
+            correo=str(correo).replace("['",'')
+            contra=str(contra).replace("['",'')
+            correo=str(correo).replace("']",'')
+            contra=str(contra).replace("']",'')
+            correoalum=list(Alumnos.objects.values_list('correoal',flat=True).filter(correoal=Email))
+            contraalum=list(Alumnos.objects.values_list('contraseñaal',flat=True).filter(contraseñaal=Password))
+            correoalum=str(correoalum).replace("['",'')
+            contraalum=str(contraalum).replace("['",'')
+            correoalum=str(correoalum).replace("']",'')
+            contraalum=str(contraalum).replace("']",'')
+            #print(contraalum)
+            #print(correoalum)
+            if (correo==Email and Password==contra) :
+            	print('%s %s' % (Email, Password))
+            	request.session['Logged']=True
+            	request.session['correolog']=Email
+            	return redirect("/perfilprof/")
+            elif (correoalum==Email and Password==contraalum):
+            	print('%s %s' % (Email, Password))
+            	request.session['Logged']=True
+            	request.session['correolog']=Email
+            	return redirect("/perfilalum/")
+
+    else:
+        form=LoginForm()
+    return render(request,'viacadapp/login.html',{'form':form})
+
+
+def perfilprof(request):
+	perfilusuario = Profesores.objects.filter(correo=request.session['correolog'])
+	return render(request,'viacadapp/perfilprof.html',{'perfilusuario':perfilusuario})
+
+def perfilalum(request):
+	perfilusuario = Alumnos.objects.filter(correoal=request.session['correolog'])
+	return render(request,'viacadapp/perfilalum.html',{'perfilusuario':perfilusuario})
