@@ -25,7 +25,7 @@ SECRET_KEY = '_=%q+n8!lg%lwmp@om#%-3*z#j%pd39r5o7tq9+g-5lqmtb-@9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,8 +79,8 @@ DATABASES = {
         'ENGINE': 'mysql_cymysql',
         'NAME': 'viacad',
         'USER':'root',
-        'PASSWORD': '14232628',
-        'HOST': '0.0.0.0',
+        'PASSWORD': 'cosafa2008',
+        'HOST': '127.0.0.1',
         'PORT':'3306',
     }
 }

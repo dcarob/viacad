@@ -6,6 +6,8 @@ from django.contrib import messages
 from .functions import CrearMaterias 
 from .forms import FormularioInscripcionProfesores 
 from .forms import FormularioInscripcionAlumnos 
+from .forms import FormularioEditarProfesores 
+from .forms import FormularioEditarAlumnos
 from .forms import LoginForm 
 
 from .forms import ElegirMateria 
@@ -73,7 +75,7 @@ def registroAlumnos(request):
 			print(correoal)
 			registrado=1
 			request.session['registrado']=registrado
-			return redirect("buscarprof/")
+			return redirect("/")
 	else:
 		form=FormularioInscripcionAlumnos()
 		return render(request, 'viacadapp/registroAlumnos.html',{'form':form})
@@ -171,3 +173,51 @@ def perfilprof(request):
 def perfilalum(request):
 	perfilusuario = Alumnos.objects.filter(correoal=request.session['correolog'])
 	return render(request,'viacadapp/perfilalum.html',{'perfilusuario':perfilusuario})
+
+def editarprof(request):
+	perfilusuario = Profesores.objects.filter(correo=request.session['correolog'])
+	for i in perfilusuario:
+		print(i.nombrecompleto)
+	if request.method=='POST':
+		
+		form=FormularioEditarProfesores(request.POST, request.FILES, 
+			correo=request.session['correolog'], perfil=i)
+		if form.is_valid():
+			Profesores.objects.filter(correo=request.session['correolog'])
+			pict=Profesores(id=i.id, foto=request.FILES['foto'], correo=form.cleaned_data['correo'],
+			nombrecompleto=form.cleaned_data['nombrecompleto'],
+			cualidades=form.cleaned_data['cualidades'], 
+			costohora=form.cleaned_data['costohora'], 
+			contraseña=form.cleaned_data['contraseña'],
+			materia=form.cleaned_data['materia'])
+			pict.save()
+			return redirect("/perfilprof/")
+
+	else:
+		form=FormularioEditarProfesores(correo=request.session['correolog'], perfil=i)
+		return render(request, 'viacadapp/editarprofesor.html',{'form':form})
+
+def editaralumno(request):
+	perfilusuario = Alumnos.objects.filter(correoal=request.session['correolog'])
+	for i in perfilusuario:
+		print(i.nombrecompletoal)
+	if request.method=='POST':
+		
+		form=FormularioEditarAlumnos(request.POST, request.FILES, 
+			correoal=request.session['correolog'], perfil=i)
+		if form.is_valid():
+			Alumnos.objects.filter(correoal=request.session['correolog'])
+			pict=Alumnos(id=i.id, correoal=form.cleaned_data['correoal'],
+			nombrecompletoal=form.cleaned_data['nombrecompletoal'])
+			
+			pict.save()
+			return redirect("/perfilalum/")
+
+	else:
+		form=FormularioEditarAlumnos(correoal=request.session['correolog'], perfil=i)
+		return render(request, 'viacadapp/editaralumno.html',{'form':form})
+
+
+def logout(request):
+	request.session.flush()
+	return redirect("/")
