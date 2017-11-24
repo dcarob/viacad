@@ -54,3 +54,19 @@ class LoginForm(forms.Form):
     widget=forms.TextInput(attrs={'class':'form-control','placeholder':'e-mail','style':'width:30%'}))
     password = forms.CharField(label='Contraseña', max_length=32,
     widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Contraseña','style':'width:30%'}))
+
+class FormularioEditarProfesores(forms.ModelForm):
+	nombrecompleto= forms.CharField(label='Nombre Completo',max_length= 80)
+	correo= forms.EmailField(max_length= 100)
+	foto = forms.ImageField(label='Agregar Foto de Perfil')
+	choices= ListaMaterias()
+	choices1= choices.pop(0)
+	materia= forms.MultipleChoiceField(label='Materias que desea enseñar',choices= choices, 
+										widget=forms.CheckboxSelectMultiple(attrs=
+											{'class':'checkbox-inline'}))
+	cualidades= forms.CharField(label='Cualidades',max_length= 250)
+	costohora=forms.IntegerField(label='Valor de la hora de clase')
+
+	class Meta:
+		model = Profesores
+		fields = ('nombrecompleto', 'correo', 'foto', 'materia', 'cualidades', 'costohora',)

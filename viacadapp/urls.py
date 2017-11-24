@@ -10,6 +10,7 @@ from django.views.static import serve
 urlpatterns = [
    url(r'^$',views.index,name='index'),
    url(r'^login/$',views.login,name='login'),
+   url(r'^editarprofesor/$',views.editarprofesor,name='editarprofesor'),
    url(r'^perfilprof/$',views.perfilprof,name='perfilprof'),
    url(r'^perfilalum/$',views.perfilalum,name='perfilalum'),
    url(r'^registroProfesores/$', views.registroProfesores,name='registroProfesores' ),

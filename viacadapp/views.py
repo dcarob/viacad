@@ -3,10 +3,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from .functions import CrearMaterias 
 from .forms import FormularioInscripcionProfesores 
 from .forms import FormularioInscripcionAlumnos 
 from .forms import LoginForm 
+from .forms import FormularioEditarProfesores
 
 from .forms import ElegirMateria 
 from .forms import FormularioSolicitud
@@ -21,7 +23,9 @@ from .models import Profesores
 from .models import Alumnos
 from .models import Materias
 from .models import Solicitud
+from .models import Votaciones
 
+from django.views.generic import UpdateView
 # Create your views here.
 def index(request):
 	try:
@@ -39,16 +43,6 @@ def registroProfesores(request):
 		form=FormularioInscripcionProfesores(request.POST, request.FILES)
 		registrado=0
 		if form.is_valid():
-			#nc=form.cleaned_data['nombrecompleto']
-			#correo= form.cleaned_data['correo']
-			#contra= form.cleaned_data['contraseña']
-			#foto= request.FILES['foto']
-			#mat= form.cleaned_data['materia']
-			#cuali=form.cleaned_data['cualidades']
-			#hora=form.cleaned_data['costohora']
-			#g=Profesores(nombrecompleto=nc, correo=correo, contraseña=contra, foto=foto,
-			# 			materia=mat, cualidades=cuali, costohora=hora)
-			#g.save()
 			form.save()
 			registrado=1
 			request.session['registrado']=registrado
@@ -171,3 +165,26 @@ def perfilprof(request):
 def perfilalum(request):
 	perfilusuario = Alumnos.objects.filter(correoal=request.session['correolog'])
 	return render(request,'viacadapp/perfilalum.html',{'perfilusuario':perfilusuario})
+
+def top(request):
+	if request.method=='POST':
+		if True:
+			listaprofestop = Votaciones.objects.all()
+	return render(request, 'viacadapp/index.html',{'form':form, 'listaprofestop': listaprofestop})
+
+def editarprofesor(request, id=None):
+	instance=get_object_or_404(Profesores, id=id)
+	form=FormularioInscripcionProfesores(request.POST, request.FILES)
+	if form.is_valid():
+		instance=form.save(commit=False)
+		instance.save()
+	context={
+		"nombrecompleto":instance.nombrecompleto,
+		"foto":instance.foto,
+		"materia":instance.materia,
+		"cualidades":instance.cualidades,
+		"costohora":instance.costohora,
+		"instance":instance,
+		"form":form,
+	}
+	return render(request,'viacadapp/editarprofesor.html' ,context)

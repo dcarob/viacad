@@ -22,7 +22,7 @@
                             <p>Si te gusta enseñar, hay muchos aquí que quieren aprender.</p>
                             <i class="fa fa-pencil"></i>
                             <div align="center">
-                            	<a href="/registroProfesores"><button style="background-color: #F38508; color: #FFF; height: 80%; width: 80%" align="center" >¡Regístrate ya!</button></a>
+                                <a href="/registroProfesores"><button style="background-color: #F38508; color: #FFF; height: 80%; width: 80%" align="center" >¡Regístrate ya!</button></a>
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                             <p>Encuentra aquí el tutor que necesitas.</p>
                             <i class="fa fa-address-book-o"></i>
                             <div align="center">
-                            	<a href="/registroAlumnos"><button style="background-color: #F38508; color: #FFF; height: 80%; width: 80%" align="center" >Buscar tutores</button></a>
+                                <a href="/registroAlumnos"><button style="background-color: #F38508; color: #FFF; height: 80%; width: 80%" align="center" >Buscar tutores</button></a>
                             </div>
                         </div>
                     </div>
@@ -67,6 +67,56 @@
                             </div>
                         </div>
                     </div>
+
+                <div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                </div>
+
+                <html lang="en">
+
+                <head>
+                    <title>Bootstrap Example</title>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                </head>
+                <body>
+                     <br>
+                    <br>
+                    <br>
+                    <div class="container">
+                        <h2 class="section-title">PROFESORES DESTACADOS</h2>
+                        <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                
+                                <th align="center"><STRONG>Nombre Completo</STRONG></th>
+                                <th align="center"><STRONG>Calificacion</STRONG></th>
+                                
+                             </tr>
+                        </thead>
+                        <tbody>
+                            {% for x in listaprofestop %}
+                             <tr class="info">
+                                
+                                    <td>{{ x.nombreprofesor }}</td>
+                                    <td>{{ x.votacion }}</td>                                    
+                                    
+
+                            </tr>
+                            {% endfor %}
+     
+      
+                        </tbody>
+                        </table>
+                    </div>
+
+                </body>
+            </html>
+
                                         
             </div>
         </section>
@@ -81,4 +131,3 @@
  </script>
 
 {% endblock %}
-

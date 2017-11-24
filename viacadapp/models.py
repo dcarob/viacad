@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 class Profesores(models.Model):
 	nombrecompleto= models.CharField(max_length= 80)
-	correo= models.EmailField(max_length= 100, )
+	correo= models.EmailField(max_length= 100, unique=True)
 	contraseña= models.CharField(max_length=32)
 	foto= models.ImageField(upload_to="viacadapp/images")
 	materia= models.CharField(max_length=250)
