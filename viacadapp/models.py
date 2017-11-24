@@ -7,7 +7,7 @@ class Profesores(models.Model):
 	nombrecompleto= models.CharField(max_length= 80)
 	correo= models.EmailField(max_length= 100, unique=True)
 	contraseña= models.CharField(max_length=32)
-	foto= models.ImageField(upload_to="viacadapp/images")
+	foto= models.ImageField(upload_to="viacadapp/images/")
 	materia= models.CharField(max_length=250)
 	cualidades= models.CharField(max_length= 250)
 	costohora= models.IntegerField(default=0)
@@ -30,8 +30,5 @@ class Solicitud(models.Model):
 	direccion=models.CharField(max_length=30)
 	fecha=models.DateTimeField(auto_now_add=True)
 
-class Votaciones(models.Model):
-	nombreprofesor=models.CharField(max_length=80)
-	votacion=models.DecimalField( max_digits=5, decimal_places=2)
 
 
